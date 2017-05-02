@@ -1,0 +1,3 @@
+insert into alldis
+select id,all_distributionfullnames,all_distributionisocodes,distribution_uncertain
+from com2;
