@@ -36,7 +36,8 @@
 	$species=$reg['species'];
 	$id=$reg['id'];
 	}
-	if(isset($species)){
+	if(isset($species))
+	{
 	$todo=mysql_query("SELECT * FROM prin JOIN clas JOIN dats JOIN alldis JOIN prim JOIN ulti WHERE prin.id=$id and clas.id=$id and dats.id=$id and alldis.id=$id and prim.id=$id and ulti.id=$id");
 	while($reg= mysql_fetch_array($todo)){
 	for($i=0;$i<26;$i++)
@@ -55,30 +56,45 @@
 	<td><input type='text' name='".$form2[$i]."' value='".$r[$i]."'></td>
 	</tr>";
 	}
-	echo "</table>
-	<input type='submit' name='save' value='guardar cambios'>
+	echo "</table>";
+	}
+	if(!isset($species))
+	{
+	
+	$idra=rand(1,10000);
+	$ids="".$idra;
+	while(!mysql_query("SELECT * FROM prin where id=$ids"))
+	{
+		$idra=rand(1,10000);
+		$ids="".$idra;
+	}
+	$id=$ids;
+	$todo=mysql_query("SELECT * FROM prin JOIN clas JOIN dats JOIN alldis JOIN prim JOIN ulti WHERE prin.id=$id and clas.id=$id and dats.id=$id and alldis.id=$id and prim.id=$id and ulti.id=$id");
+	while($reg= mysql_fetch_array($todo)){
+	for($i=0;$i<26;$i++)
+	$r[$i]=$reg[''.$form2[$i].''];
+	}
+	
+	echo "<table border='1'>";
+	echo "<tr>
+	<td>id</td>
+	<td>".$id."</td>
+	<input type='hidden' name='id' value='".$id."'/>
+	</tr>";
+	for($i=1;$i<26;$i++){
+	echo "<tr>
+	<td>".$form[$i]."</td>
+	<td><input type='text' name='".$form2[$i]."'></td>
+	</tr>";
+	}
+	echo "</table>";
+	}
+	echo "<input type='submit' name='save' value='guardar cambios'>
 	</form>
 	<form action='modificar.php' method='POST'>
 	<input type='submit' name='res' value='restaurar'>
 	<input type='hidden' name='mog' value='$mog'/>
 	</form>";
-	}
-		/* if("existe el nombre de la especie en la base de datos")
-		{
-			enviar todos los datos de la especie de manera vertical;
-			a la derecha de los datos de la especie agregar 'submit type=text' para que el usuario ingrese los nuevos datos que desee para la especie;
-			agregar
-			-un botón al final que diga guardar cambios==>para que se guarden los cambios en la base de datos;
-			-y otro botón que diga restablecer que borre todo lo escrito==>;	
-		}
-		else "si no existe la especie en la base de datos"
-		{		
-		enviar todos los nombres de atributo;
-			a la derecha de los atributos agregar 'submit type=text' para que el usuario ingrese los nuevos datos que desee para la especie;
-			agregar
-			-un botón al final que diga guardar especie==>para que se guarden los datos en la base de datos;
-			-y otro botón que diga restablecer que borre todo lo escrito==>;	 
-		} */
 	}
 		
 
